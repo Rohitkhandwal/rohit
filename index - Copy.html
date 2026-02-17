@@ -1,0 +1,735 @@
+<html lang="en" class="scroll-smooth"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rohit Khandwal | BCA Developer &amp; AI Enthusiast</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600&amp;family=Inter:wght@300;400;500;600&amp;family=Orbitron:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+    
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Iconify -->
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+
+    <style>
+        /* Custom Utilities & Glitch Effect */
+        body {
+            background-color: #0a0a0a;
+            color: #e5e5e5;
+            cursor: none; /* Custom cursor handling */
+        }
+        
+        .font-orbitron { font-family: 'Orbitron', sans-serif; }
+        .font-inter { font-family: 'Inter', sans-serif; }
+        .font-dancing { font-family: 'Dancing Script', cursive; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #7C3AED;
+        }
+
+        /* Glitch Animation */
+        .glitch {
+            position: relative;
+        }
+        .glitch::before, .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .glitch::before {
+            left: 2px;
+            text-shadow: -1px 0 #7C3AED;
+            clip: rect(24px, 550px, 90px, 0);
+            animation: glitch-anim-2 3s infinite linear alternate-reverse;
+        }
+        .glitch::after {
+            left: -2px;
+            text-shadow: -1px 0 #06B6D4;
+            clip: rect(85px, 550px, 140px, 0);
+            animation: glitch-anim 2.5s infinite linear alternate-reverse;
+        }
+        @keyframes glitch-anim {
+            0% { clip: rect(14px, 9999px, 127px, 0); }
+            20% { clip: rect(83px, 9999px, 19px, 0); }
+            40% { clip: rect(34px, 9999px, 92px, 0); }
+            60% { clip: rect(10px, 9999px, 95px, 0); }
+            80% { clip: rect(48px, 9999px, 86px, 0); }
+            100% { clip: rect(78px, 9999px, 128px, 0); }
+        }
+        @keyframes glitch-anim-2 {
+            0% { clip: rect(65px, 9999px, 119px, 0); }
+            20% { clip: rect(40px, 9999px, 7px, 0); }
+            40% { clip: rect(3px, 9999px, 8px, 0); }
+            60% { clip: rect(80px, 9999px, 121px, 0); }
+            80% { clip: rect(38px, 9999px, 49px, 0); }
+            100% { clip: rect(106px, 9999px, 77px, 0); }
+        }
+
+        /* Custom Cursor */
+        #cursor-glow {
+            pointer-events: none;
+            position: fixed;
+            z-index: 9999;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.15) 0%, rgba(6, 182, 212, 0.05) 40%, rgba(0,0,0,0) 70%);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.3s ease;
+        }
+        #cursor-dot {
+            pointer-events: none;
+            position: fixed;
+            z-index: 10000;
+            width: 8px;
+            height: 8px;
+            background-color: white;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            mix-blend-mode: difference;
+        }
+
+        /* Fade In Animation classes */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            will-change: opacity, visibility;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: none;
+        }
+        
+        /* Particle Canvas */
+        #particle-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="font-inter antialiased selection:bg-purple-500/30 selection:text-purple-200 overflow-x-hidden">
+
+    <!-- Custom Cursor -->
+    <div id="cursor-glow" class="hidden md:block"></div>
+    <div id="cursor-dot" class="hidden md:block"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 backdrop-blur-md bg-black/50 border-b border-white/5 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="#" class="font-orbitron text-xl font-bold tracking-tighter text-white hover:text-cyan-400 transition-colors">RK<span class="text-purple-500">.</span></a>
+            
+            <div class="hidden md:flex items-center gap-8 text-sm font-medium text-neutral-400">
+                <a href="#about" class="hover:text-white transition-colors">About</a>
+                <a href="#skills" class="hover:text-white transition-colors">Skills</a>
+                <a href="#projects" class="hover:text-white transition-colors">Projects</a>
+                <a href="#contact" class="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-white hover:bg-white/10 hover:border-purple-500/50 transition-all">Let's Talk</a>
+                <!-- Dark Mode Toggle Visual -->
+                <button class="text-neutral-400 hover:text-cyan-400 transition-colors">
+                    <iconify-icon icon="solar:moon-stars-linear" width="20"></iconify-icon>
+                </button>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden text-white" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+                <iconify-icon icon="solar:hamburger-menu-linear" width="24"></iconify-icon>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-neutral-900 border-b border-neutral-800 p-4 absolute w-full flex flex-col gap-4 text-center">
+            <a href="#about" class="text-neutral-300">About</a>
+            <a href="#skills" class="text-neutral-300">Skills</a>
+            <a href="#projects" class="text-neutral-300">Projects</a>
+            <a href="#contact" class="text-purple-400">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex flex-col justify-center items-center text-center px-4 pt-16 overflow-hidden">
+        <canvas id="particle-canvas"></canvas>
+        
+        <!-- Floating Elements -->
+        <div class="absolute top-1/4 left-10 md:left-1/4 animate-pulse opacity-30 text-purple-500">
+            <iconify-icon icon="solar:code-square-linear" width="40"></iconify-icon>
+        </div>
+        <div class="absolute bottom-1/3 right-10 md:right-1/4 animate-bounce opacity-30 text-cyan-500 delay-700">
+            <iconify-icon icon="solar:smart-home-angle-linear" width="30"></iconify-icon>
+        </div>
+        <div class="absolute top-1/3 right-10 animate-pulse opacity-20 text-pink-500 duration-1000">
+            <iconify-icon icon="solar:heart-angle-linear" width="25"></iconify-icon>
+        </div>
+
+        <div class="relative z-10 max-w-4xl mx-auto space-y-6">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-900/20 border border-purple-500/30 text-purple-300 text-xs font-medium tracking-wide mb-4">
+                <span class="relative flex h-2 w-2">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-purple-500"></span>
+                </span>
+                Open to Opportunities
+            </div>
+
+            <h1 class="font-orbitron text-5xl md:text-7xl font-bold tracking-tight text-white mb-2" data-text="Rohit Khandwal">
+                <span class="glitch" data-text="Rohit Khandwal">Rohit Khandwal</span>
+            </h1>
+            
+            <p class="font-dancing text-xl md:text-2xl text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">
+                Learning AI, Web, and turning ideas into code
+            </p>
+
+            <p class="font-inter text-neutral-400 max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
+                BCA 3rd Year @ Graphic Era University | AI Enthusiast | Web Builder. 
+                <br class="hidden md:block">
+                Passionate about exploring AI, HTML/CSS/JS, and building interactive experiences—from romantic surprises to useful apps. Eager to contribute and grow in tech! 🚀
+            </p>
+
+            <div class="flex flex-col md:flex-row gap-4 justify-center items-center mt-8">
+                <a href="#projects" class="group relative px-6 py-3 bg-white text-black font-semibold rounded-lg overflow-hidden transition-all hover:scale-105">
+                    <span class="relative z-10 flex items-center gap-2">
+                        Explore Projects 
+                        <iconify-icon icon="solar:arrow-right-linear" class="group-hover:translate-x-1 transition-transform"></iconify-icon>
+                    </span>
+                    <div class="absolute inset-0 bg-gradient-to-r from-cyan-300 to-purple-300 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                </a>
+                <a href="#contact" class="px-6 py-3 rounded-lg border border-neutral-700 text-white font-medium hover:border-purple-500 hover:text-purple-400 transition-all">
+                    Contact Me
+                </a>
+            </div>
+            
+            <div class="flex gap-6 justify-center mt-12 text-neutral-500">
+                <a href="#" class="hover:text-white hover:scale-110 transition-all"><iconify-icon icon="mdi:github" width="24"></iconify-icon></a>
+                <a href="#" class="hover:text-blue-400 hover:scale-110 transition-all"><iconify-icon icon="mdi:linkedin" width="24"></iconify-icon></a>
+                <a href="#" class="hover:text-pink-500 hover:scale-110 transition-all"><iconify-icon icon="mdi:instagram" width="24"></iconify-icon></a>
+            </div>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce text-neutral-600">
+            <iconify-icon icon="solar:mouse-linear" width="24"></iconify-icon>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 px-6 relative bg-neutral-950">
+        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center fade-in-section">
+            <div class="relative group">
+                <!-- Neon Border Effect -->
+                <div class="absolute -inset-1 bg-gradient-to-r from-purple-600 to-cyan-600 rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
+                <div class="relative bg-neutral-900 rounded-2xl p-2 h-96 w-full flex items-center justify-center border border-neutral-800 overflow-hidden">
+                    <!-- Placeholder for Photo -->
+               <section id="about" class="py-24">
+  <div class="max-w-6xl mx-auto px-6 text-center">
+    <h2 class="text-4xl font-bold text-purple-600 mb-8">About Me</h2>
+
+    <!-- Super simple image test -->
+    <img 
+      src="rohit.jpg" 
+      alt="Ro" 
+      class="mx-auto w-64 h-64 object-cover rounded-full border-4 border-purple-500 shadow-xl"
+    >
+
+    <p class="mt-8 text-lg text-gray-700">Your description here...</p>
+  </div>
+</section>
+                    <!-- Decorative overlay -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                    <div class="absolute bottom-4 left-4 text-white font-orbitron text-xs tracking-wider text-cyan-400">DEHRADUN, INDIA</div>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <h2 class="font-orbitron text-3xl md:text-4xl font-bold text-white flex items-center gap-3">
+                    About <span class="text-purple-500">Me</span>
+                </h2>
+                <div class="w-16 h-1 bg-gradient-to-r from-purple-500 to-cyan-500 rounded-full"></div>
+                
+                <p class="text-neutral-300 leading-relaxed font-light">
+                    I'm <span class="text-white font-medium">Rohit Khandwal</span>, currently in my 3rd year of BCA at <span class="text-white">Graphic Era University, Dehradun</span>.
+                </p>
+                <p class="text-neutral-400 leading-relaxed text-sm">
+                    I love diving into technology—especially AI tools, web development with HTML/CSS/JS, and creating fun interactive sites. While I don't have corporate experience yet, I've spent countless nights self-learning and building personal projects, like an emotional birthday surprise website featuring games and animations.
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                    <div class="bg-neutral-900/50 p-4 rounded-lg border border-neutral-800 hover:border-purple-500/50 transition-colors">
+                        <iconify-icon icon="solar:heart-bold-duotone" class="text-pink-500 mb-2" width="24"></iconify-icon>
+                        <h3 class="text-white text-sm font-semibold mb-1">Creative Coder</h3>
+                        <p class="text-xs text-neutral-500">Turned a simple prompt into a full interactive love site.</p>
+                    </div>
+                    <div class="bg-neutral-900/50 p-4 rounded-lg border border-neutral-800 hover:border-cyan-500/50 transition-colors">
+                        <iconify-icon icon="solar:stars-minimalistic-bold-duotone" class="text-cyan-500 mb-2" width="24"></iconify-icon>
+                        <h3 class="text-white text-sm font-semibold mb-1">Future Focused</h3>
+                        <p class="text-xs text-neutral-500">Dreaming of AI-powered apps &amp; Full Stack Dev.</p>
+                    </div>
+                </div>
+                
+                <p class="text-xs text-neutral-500 pt-4 font-mono">
+                    In free time: Mountains of Dehradun 🏔️, Chai ☕, and VS Code 💻.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-24 px-6 bg-black relative">
+        <!-- Background Grid -->
+        <div class="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+
+        <div class="max-w-6xl mx-auto relative z-10 fade-in-section">
+            <div class="text-center mb-16">
+                <h2 class="font-orbitron text-3xl md:text-4xl font-bold text-white mb-4">Tech <span class="text-cyan-400">Arsenal</span></h2>
+                <p class="text-neutral-400 text-sm max-w-lg mx-auto">Tools and technologies I am currently learning and using to build my projects.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Web Dev -->
+                <div class="bg-neutral-900 border border-neutral-800 rounded-xl p-6 hover:shadow-lg hover:shadow-purple-500/10 transition-all group">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="p-2 bg-purple-500/10 rounded-lg text-purple-400 group-hover:text-purple-300">
+                            <iconify-icon icon="solar:laptop-minimalistic-linear" width="24"></iconify-icon>
+                        </div>
+                        <h3 class="font-orbitron text-lg font-semibold text-white">Web Dev</h3>
+                    </div>
+                    
+                    <div class="space-y-5">
+                        <div class="group/item relative cursor-help">
+                            <div class="flex justify-between text-xs text-neutral-400 mb-1">
+                                <span>HTML/CSS/JS</span>
+                                <span>95%</span>
+                            </div>
+                            <div class="w-full bg-neutral-800 rounded-full h-1.5 overflow-hidden">
+                                <div class="bg-gradient-to-r from-purple-600 to-cyan-500 h-1.5 rounded-full w-[95%]"></div>
+                            </div>
+                            <!-- Tooltip -->
+                            <div class="absolute -top-8 left-0 bg-neutral-800 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover/item:opacity-100 transition-opacity">Built interactive sites</div>
+                        </div>
+                        
+                        <div class="group/item">
+                            <div class="flex justify-between text-xs text-neutral-400 mb-1">
+                                <span>Responsive Design</span>
+                                <span>90%</span>
+                            </div>
+                            <div class="w-full bg-neutral-800 rounded-full h-1.5 overflow-hidden">
+                                <div class="bg-purple-600 h-1.5 rounded-full w-[90%]"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Programming -->
+                <div class="bg-neutral-900 border border-neutral-800 rounded-xl p-6 hover:shadow-lg hover:shadow-cyan-500/10 transition-all group">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="p-2 bg-cyan-500/10 rounded-lg text-cyan-400 group-hover:text-cyan-300">
+                            <iconify-icon icon="solar:code-circle-linear" width="24"></iconify-icon>
+                        </div>
+                        <h3 class="font-orbitron text-lg font-semibold text-white">Programming</h3>
+                    </div>
+                    
+                    <div class="space-y-5">
+                        <div class="group/item">
+                            <div class="flex justify-between text-xs text-neutral-400 mb-1">
+                                <span>Python</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="w-full bg-neutral-800 rounded-full h-1.5 overflow-hidden">
+                                <div class="bg-cyan-500 h-1.5 rounded-full w-[85%]"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="group/item">
+                            <div class="flex justify-between text-xs text-neutral-400 mb-1">
+                                <span>C/C++ &amp; Java Basics</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="w-full bg-neutral-800 rounded-full h-1.5 overflow-hidden">
+                                <div class="bg-cyan-600 h-1.5 rounded-full w-[85%]"></div>
+                            </div>
+                        </div>
+
+                         <div class="group/item">
+                            <div class="flex justify-between text-xs text-neutral-400 mb-1">
+                                <span>SQL / MySQL</span>
+                                <span>75%</span>
+                            </div>
+                            <div class="w-full bg-neutral-800 rounded-full h-1.5 overflow-hidden">
+                                <div class="bg-cyan-700 h-1.5 rounded-full w-[75%]"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI & Tools -->
+                <div class="bg-neutral-900 border border-neutral-800 rounded-xl p-6 hover:shadow-lg hover:shadow-pink-500/10 transition-all group">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="p-2 bg-pink-500/10 rounded-lg text-pink-400 group-hover:text-pink-300">
+                            <iconify-icon icon="solar:magic-stick-3-linear" width="24"></iconify-icon>
+                        </div>
+                        <h3 class="font-orbitron text-lg font-semibold text-white">AI &amp; Tools</h3>
+                    </div>
+                    
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-neutral-800 border border-neutral-700 rounded-full text-xs text-neutral-300 hover:border-pink-500 transition-colors">Prompt Engineering</span>
+                        <span class="px-3 py-1 bg-neutral-800 border border-neutral-700 rounded-full text-xs text-neutral-300 hover:border-pink-500 transition-colors">ChatGPT / Aura</span>
+                        <span class="px-3 py-1 bg-neutral-800 border border-neutral-700 rounded-full text-xs text-neutral-300 hover:border-pink-500 transition-colors">Git &amp; GitHub</span>
+                        <span class="px-3 py-1 bg-neutral-800 border border-neutral-700 rounded-full text-xs text-neutral-300 hover:border-pink-500 transition-colors">VS Code</span>
+                        <span class="px-3 py-1 bg-neutral-800 border border-neutral-700 rounded-full text-xs text-neutral-300 hover:border-pink-500 transition-colors">Basic Figma</span>
+                    </div>
+                    <p class="mt-4 text-xs text-neutral-500 italic">"Learning to leverage AI to code faster."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-24 px-6 bg-neutral-950">
+        <div class="max-w-6xl mx-auto fade-in-section">
+            <h2 class="font-orbitron text-3xl md:text-4xl font-bold text-white mb-12 flex items-center gap-2">
+                Featured <span class="text-purple-500">Projects</span>
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Project 1 (Featured) -->
+                <div class="group relative rounded-2xl bg-neutral-900 border border-neutral-800 hover:border-purple-500 overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_10px_40px_-10px_rgba(124,58,237,0.3)]">
+                    <div class="h-48 bg-gradient-to-br from-neutral-800 to-neutral-900 flex items-center justify-center relative overflow-hidden">
+                        <!-- Simulated Screen -->
+                        <div class="w-3/4 h-3/4 bg-neutral-950 rounded-t-lg border border-neutral-700 flex flex-col items-center justify-center relative z-10">
+                            <iconify-icon icon="solar:heart-angle-bold" class="text-pink-500 text-4xl animate-pulse"></iconify-icon>
+                            <span class="text-[10px] text-pink-300 mt-2 font-dancing">Happy Birthday Love</span>
+                        </div>
+                        <div class="absolute inset-0 bg-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    </div>
+                    
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-bold text-white font-orbitron group-hover:text-purple-400 transition-colors">Birthday Surprise Site</h3>
+                            <a href="#" class="text-neutral-500 hover:text-white"><iconify-icon icon="solar:link-circle-linear" width="24"></iconify-icon></a>
+                        </div>
+                        <p class="text-neutral-400 text-sm mb-4 leading-relaxed">
+                            Interactive romantic page with photo gallery, love quiz game, and heart-catching mini-game. Built to express feelings through code.
+                        </p>
+                        <div class="flex flex-wrap gap-2 text-[10px] font-mono uppercase text-purple-300">
+                            <span class="bg-purple-900/30 px-2 py-1 rounded">HTML</span>
+                            <span class="bg-purple-900/30 px-2 py-1 rounded">CSS Animation</span>
+                            <span class="bg-purple-900/30 px-2 py-1 rounded">JS Game Logic</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="group relative rounded-2xl bg-neutral-900 border border-neutral-800 hover:border-cyan-500 overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_10px_40px_-10px_rgba(6,182,212,0.2)]">
+                    <div class="h-48 bg-gradient-to-br from-neutral-800 to-neutral-900 flex items-center justify-center">
+                        <iconify-icon icon="solar:user-id-linear" class="text-cyan-500 text-6xl opacity-50 group-hover:scale-110 transition-transform"></iconify-icon>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white font-orbitron mb-2 group-hover:text-cyan-400 transition-colors">Personal Portfolio</h3>
+                        <p class="text-neutral-400 text-sm mb-4">
+                            My own responsive portfolio showcasing skills and projects. Designed with a dark neon aesthetic and custom animations.
+                        </p>
+                        <div class="flex flex-wrap gap-2 text-[10px] font-mono uppercase text-cyan-300">
+                            <span class="bg-cyan-900/30 px-2 py-1 rounded">HTML/Tailwind</span>
+                            <span class="bg-cyan-900/30 px-2 py-1 rounded">Aura.build</span>
+                            <span class="bg-cyan-900/30 px-2 py-1 rounded">JavaScript</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="group relative rounded-2xl bg-neutral-900 border border-neutral-800 hover:border-white/40 overflow-hidden transition-all duration-300 hover:-translate-y-1">
+                    <div class="p-6 h-full flex flex-col">
+                        <div class="flex items-center gap-2 mb-4">
+                            <div class="p-2 bg-neutral-800 rounded-full"><iconify-icon icon="solar:magic-stick-3-linear" class="text-white"></iconify-icon></div>
+                            <h3 class="text-lg font-bold text-white">AI Prompt Gen</h3>
+                        </div>
+                        <p class="text-neutral-400 text-sm flex-grow">
+                            A simple web app to generate creative prompts for AI tools. Randomizes templates to help with writer's block.
+                        </p>
+                        <div class="mt-4 pt-4 border-t border-neutral-800 flex justify-between items-center">
+                            <span class="text-xs text-neutral-500">JS + APIs</span>
+                            <span class="text-xs text-neutral-500">In Progress</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4 -->
+                <div class="group relative rounded-2xl bg-neutral-900 border border-neutral-800 hover:border-white/40 overflow-hidden transition-all duration-300 hover:-translate-y-1">
+                    <div class="p-6 h-full flex flex-col">
+                        <div class="flex items-center gap-2 mb-4">
+                            <div class="p-2 bg-neutral-800 rounded-full"><iconify-icon icon="solar:checklist-minimalistic-linear" class="text-white"></iconify-icon></div>
+                            <h3 class="text-lg font-bold text-white">Task Manager</h3>
+                        </div>
+                        <p class="text-neutral-400 text-sm flex-grow">
+                            Basic To-Do list with LocalStorage implementation to practice CRUD operations and data handling.
+                        </p>
+                        <div class="mt-4 pt-4 border-t border-neutral-800 flex justify-between items-center">
+                            <span class="text-xs text-neutral-500">Vanilla JS</span>
+                            <a href="#" class="text-xs text-white hover:underline">View Code</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12 text-center">
+                <a href="#" class="inline-flex items-center gap-2 px-6 py-3 border border-neutral-700 rounded-lg text-sm font-medium hover:bg-white hover:text-black transition-all">
+                    <iconify-icon icon="mdi:github"></iconify-icon> View More on GitHub
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Timeline -->
+    <section class="py-24 px-6 bg-black">
+        <div class="max-w-4xl mx-auto fade-in-section">
+            <h2 class="font-orbitron text-3xl font-bold text-white mb-12 text-center">Education &amp; <span class="text-cyan-400">Journey</span></h2>
+            
+            <div class="relative pl-8 md:pl-0">
+                <!-- Vertical Line -->
+                <div class="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-neutral-800 -translate-x-1/2"></div>
+                
+                <!-- Item 1 -->
+                <div class="relative flex flex-col md:flex-row items-center justify-between mb-12 w-full">
+                    <div class="order-1 md:w-5/12 md:order-1 text-left md:text-right pr-0 md:pr-8 pl-8 md:pl-0 mb-4 md:mb-0">
+                        <h3 class="text-lg font-bold text-white">BCA Student</h3>
+                        <p class="text-purple-400 text-sm font-medium">Graphic Era University, Dehradun</p>
+                        <p class="text-neutral-500 text-xs mt-1">2023 - Present (Expected 2027)</p>
+                    </div>
+                    
+                    <div class="absolute left-8 md:left-1/2 -translate-x-1/2 w-4 h-4 bg-black border-2 border-purple-500 rounded-full z-10 shadow-[0_0_10px_rgba(124,58,237,0.8)]"></div>
+                    
+                    <div class="order-2 md:w-5/12 md:order-2 pl-8">
+                        <p class="text-neutral-400 text-sm leading-relaxed">
+                            Coursework: C/Java/Python, Web Technologies, DBMS, Intro to AI/ML. Active member of tech clubs.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="relative flex flex-col md:flex-row items-center justify-between w-full">
+                    <div class="order-1 md:w-5/12 md:order-1 text-left md:text-right pr-0 md:pr-8 pl-8 md:pl-0 mb-4 md:mb-0">
+                        <p class="text-neutral-400 text-sm leading-relaxed">
+                            Building websites, learning prompts, and exploring modern frameworks like Tailwind CSS via documentation &amp; YouTube.
+                        </p>
+                    </div>
+                    
+                    <div class="absolute left-8 md:left-1/2 -translate-x-1/2 w-4 h-4 bg-black border-2 border-cyan-500 rounded-full z-10 shadow-[0_0_10px_rgba(6,182,212,0.8)]"></div>
+                    
+                    <div class="order-2 md:w-5/12 md:order-2 pl-8">
+                        <h3 class="text-lg font-bold text-white">Self-Learning Era</h3>
+                        <p class="text-cyan-400 text-sm font-medium">Online &amp; Practical</p>
+                        <p class="text-neutral-500 text-xs mt-1">Ongoing</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 px-6 bg-neutral-950 border-t border-neutral-900">
+        <div class="max-w-xl mx-auto fade-in-section">
+            <div class="text-center mb-10">
+                <h2 class="font-orbitron text-3xl font-bold text-white mb-4">Get In <span class="text-purple-500">Touch</span></h2>
+                <p class="text-neutral-400 text-sm">Have an idea or just want to chat about AI? Drop a message!</p>
+            </div>
+
+            <form id="contactForm" class="space-y-4" onsubmit="handleForm(event)">
+                <div>
+                    <input type="text" placeholder="Name" class="w-full bg-neutral-900 border border-neutral-800 rounded-lg px-4 py-3 text-white placeholder-neutral-600 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all text-sm" required="">
+                </div>
+                <div>
+                    <input type="email" placeholder="Email" class="w-full bg-neutral-900 border border-neutral-800 rounded-lg px-4 py-3 text-white placeholder-neutral-600 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all text-sm" required="">
+                </div>
+                <div>
+                    <textarea rows="4" placeholder="Your Message" class="w-full bg-neutral-900 border border-neutral-800 rounded-lg px-4 py-3 text-white placeholder-neutral-600 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all text-sm" required=""></textarea>
+                </div>
+                <button type="submit" class="w-full bg-white text-black font-semibold py-3 rounded-lg hover:bg-neutral-200 transition-colors flex justify-center items-center gap-2">
+                    Send Message <iconify-icon icon="solar:plain-3-linear"></iconify-icon>
+                </button>
+            </form>
+
+            <div id="successMessage" class="hidden text-center mt-4 p-4 bg-green-900/20 border border-green-500/30 rounded-lg text-green-400 text-sm">
+                Thanks! Will reply soon ❤️
+            </div>
+
+            <div class="mt-12 flex justify-center gap-8 text-neutral-500">
+                <div class="flex flex-col items-center gap-1 hover:text-white transition-colors cursor-pointer">
+                    <iconify-icon icon="solar:letter-linear" width="24"></iconify-icon>
+                    <span class="text-[10px]">rohitrohit40936@gmail.com</span>
+                </div>
+                <div class="flex flex-col items-center gap-1 hover:text-white transition-colors cursor-pointer">
+                    <iconify-icon icon="solar:map-point-linear" width="24"></iconify-icon>
+                    <span class="text-[10px]">Dehradun, UK</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-black text-center border-t border-neutral-900">
+        <p class="text-neutral-500 text-xs font-inter mb-2">
+            Made with ❤️ &amp; AI tools | Rohit Khandwal © 2026
+        </p>
+        <p class="text-neutral-700 text-[10px]">Built using Aura.build ideas</p>
+        <a href="#" class="inline-block mt-4 text-neutral-600 hover:text-purple-500 transition-colors">
+            <iconify-icon icon="solar:double-alt-arrow-up-linear" width="20"></iconify-icon>
+        </a>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Custom Cursor Logic
+        const cursorGlow = document.getElementById('cursor-glow');
+        const cursorDot = document.getElementById('cursor-dot');
+
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX;
+            const y = e.clientY;
+            
+            cursorDot.style.left = `${x}px`;
+            cursorDot.style.top = `${y}px`;
+            
+            cursorGlow.style.left = `${x}px`;
+            cursorGlow.style.top = `${y}px`;
+        });
+
+        // Scroll Animation Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in-section').forEach((section) => {
+            observer.observe(section);
+        });
+
+        // Simple Form Handler
+        function handleForm(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            const originalText = btn.innerHTML;
+            
+            btn.innerHTML = '<iconify-icon icon="svg-spinners:ring-resize" width="24"></iconify-icon> Sending...';
+            
+            setTimeout(() => {
+                document.getElementById('contactForm').reset();
+                document.getElementById('successMessage').classList.remove('hidden');
+                btn.innerHTML = originalText;
+                
+                // Simple Confetti effect by creating elements
+                for(let i=0; i<30; i++) {
+                    createConfetti();
+                }
+            }, 1500);
+        }
+
+        function createConfetti() {
+            const confetti = document.createElement('div');
+            confetti.style.position = 'fixed';
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.top = '-10px';
+            confetti.style.width = '10px';
+            confetti.style.height = '10px';
+            confetti.style.backgroundColor = ['#7C3AED', '#06B6D4', '#ec4899'][Math.floor(Math.random()*3)];
+            confetti.style.zIndex = '9999';
+            document.body.appendChild(confetti);
+
+            const anim = confetti.animate([
+                { transform: `translate(0, 0) rotate(0deg)`, opacity: 1 },
+                { transform: `translate(${Math.random()*100 - 50}px, 100vh) rotate(720deg)`, opacity: 0 }
+            ], {
+                duration: 2000 + Math.random() * 2000,
+                easing: 'cubic-bezier(0, .9, .57, 1)',
+                fill: 'forwards'
+            });
+
+            anim.onfinish = () => confetti.remove();
+        }
+
+        // Particle Canvas Logic (Subtle Background)
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.size = Math.random() * 2;
+                this.color = Math.random() > 0.5 ? 'rgba(124, 58, 237, 0.3)' : 'rgba(6, 182, 212, 0.3)';
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < 50; i++) particles.push(new Particle());
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, width, height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            // Draw connections
+            particles.forEach((p1, i) => {
+                particles.slice(i + 1).forEach(p2 => {
+                    const dx = p1.x - p2.x;
+                    const dy = p1.y - p2.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 100) {
+                        ctx.strokeStyle = `rgba(255, 255, 255, ${0.1 - dist/1000})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.beginPath();
+                        ctx.moveTo(p1.x, p1.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.stroke();
+                    }
+                });
+            });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+    </script>
+
+</body></html>
